@@ -12,16 +12,21 @@ public class GreetClient {
 
     public static void main(String[] args) {
         while (true) {
-            if(args.length ==2) {
+            if (args.length == 2) {
                 try {
                     GreetClient greetClient = new GreetClient();
-                    greetClient.startConnection(args[0], Integer.valueOf(args[1]));
+                    greetClient.startConnection(args[0], Integer.parseInt(args[1]));
                     String response = greetClient.sendMessage("hello server");
                     System.out.println(response);
                     greetClient.stopConnection();
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
+            }
+            try {
+                Thread.sleep(3000L);
+            } catch (InterruptedException e) {
+                System.err.println(e.getMessage());
             }
         }
     }
@@ -34,8 +39,7 @@ public class GreetClient {
 
     public String sendMessage(String msg) throws IOException {
         out.println(msg);
-        String resp = in.readLine();
-        return resp;
+        return in.readLine();
     }
 
     public void stopConnection() throws IOException {
